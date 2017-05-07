@@ -8,11 +8,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import it.polito.tdp.country.model.Country;
+import it.polito.tdp.country.model.CountryIdMap;
 import it.polito.tdp.country.model.CountryPair;
 
 public class CountryDao {
 
-	public List<Country> listCountry() {
+	public List<Country> listCountry(CountryIdMap countryIdMap) {
 
 		final String sql = "SELECT CCode, StateAbb, StateNme FROM country ORDER BY CCode ASC";
 
@@ -31,6 +32,7 @@ public class CountryDao {
 			res.close();
 			conn.close();
 			
+			countryIdMap.put(list);
 			return list ;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

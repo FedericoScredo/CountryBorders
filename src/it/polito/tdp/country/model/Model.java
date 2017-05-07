@@ -12,9 +12,11 @@ import it.polito.tdp.db.CountryDao;
 public class Model {
 	
 	private UndirectedGraph<Country, DefaultEdge> graph  ;
+	private CountryIdMap countryIdMap ;
 	
 	public Model() {
 		this.graph = new SimpleGraph<>(DefaultEdge.class) ;
+		this.countryIdMap = new CountryIdMap() ;
 	}
 	
 	/**
@@ -26,7 +28,7 @@ public class Model {
 		CountryDao dao = new CountryDao() ;
 		
 		// crea i vertici del grafo
-		Graphs.addAllVertices(graph, dao.listCountry()) ;
+		Graphs.addAllVertices(graph, dao.listCountry(countryIdMap)) ;
 	
 		// crea gli archi del grafo -- versione 1
 		for(Country c1: graph.vertexSet()) {
@@ -49,7 +51,7 @@ public class Model {
 		CountryDao dao = new CountryDao() ;
 		
 		// crea i vertici del grafo
-		Graphs.addAllVertices(graph, dao.listCountry()) ;
+		Graphs.addAllVertices(graph, dao.listCountry(countryIdMap)) ;
 	
 		// crea gli archi del grafo -- versione 2
 		for(Country c: graph.vertexSet()) {
@@ -68,7 +70,7 @@ public class Model {
 		CountryDao dao = new CountryDao() ;
 		
 		// crea i vertici del grafo
-		Graphs.addAllVertices(graph, dao.listCountry()) ;
+		Graphs.addAllVertices(graph, dao.listCountry(countryIdMap)) ;
 	
 		// crea gli archi del grafo -- versione 3
 		for(CountryPair cp : dao.listCoppieCountryAdiacenti()) {
