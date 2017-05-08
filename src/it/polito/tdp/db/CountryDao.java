@@ -26,13 +26,14 @@ public class CountryDao {
 			List<Country> list = new ArrayList<>() ;
 			
 			while(res.next()) {
-				list.add(new Country(res.getInt("CCode"), res.getString("StateAbb"), res.getString("StateNme"))) ;
+				Country c = new Country(res.getInt("CCode"), res.getString("StateAbb"), res.getString("StateNme")) ;
+				c = countryIdMap.put(c);
+				list.add(c) ;
 			}
 			
 			res.close();
 			conn.close();
 			
-			countryIdMap.put(list);
 			return list ;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -72,7 +73,7 @@ public class CountryDao {
 		}
 	}
 
-	public List<Country> listAdiacenti(Country c) {
+	public List<Country> listAdiacenti(Country c, CountryIdMap countryIdMap) {
 		final String sql = "SELECT country.CCode, country.StateAbb, country.StateNme " +
 				"FROM contiguity, country "+
 				"WHERE contiguity.state2no = country.CCode "+
@@ -90,7 +91,9 @@ public class CountryDao {
 			List<Country> list = new ArrayList<>() ;
 			
 			while(res.next()) {
-				list.add(new Country(res.getInt("CCode"), res.getString("StateAbb"), res.getString("StateNme"))) ;
+				Country c2 = new Country(res.getInt("CCode"), res.getString("StateAbb"), res.getString("StateNme")) ;
+				c2 = countryIdMap.put(c2) ;
+				list.add(c2) ;
 			}
 			
 			res.close();

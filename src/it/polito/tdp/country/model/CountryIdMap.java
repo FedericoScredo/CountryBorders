@@ -16,8 +16,22 @@ public class CountryIdMap {
 		return map.get(ccode) ;
 	}
 	
-	public void put(Country c) {
-		map.put(c.getcCode(), c) ;
+	/**
+	 * Check whether the {@link Country} is already contained in the <em>Identity Map</em>.
+	 * If yes, it returns the stored object. If no, it adds this new object to the map.
+	 * In all cases, the "canonical" object is returned.
+	 * 
+	 * @param country the element to be added
+	 * @return the canonical reference to the object
+	 */
+	public Country put(Country country) {
+		Country old = map.get(country.getcCode()) ; 
+		if(old==null) {
+			map.put(country.getcCode(), country) ;
+			return country ;
+		} else {
+			return old ;
+		}
 	}
 	
 	public void put(Collection<Country> coll) {

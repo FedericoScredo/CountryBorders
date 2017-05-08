@@ -55,7 +55,7 @@ public class Model {
 	
 		// crea gli archi del grafo -- versione 2
 		for(Country c: graph.vertexSet()) {
-			List<Country> adiacenti = dao.listAdiacenti(c) ;
+			List<Country> adiacenti = dao.listAdiacenti(c, countryIdMap) ;
 			for(Country c2: adiacenti)
 				graph.addEdge(c, c2) ;
 		}
