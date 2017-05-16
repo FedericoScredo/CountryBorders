@@ -34,10 +34,4 @@ public class CountryIdMap {
 		}
 	}
 	
-	public void put(Collection<Country> coll) {
-		for(Country c : coll) {
-			this.put(c);
-		}
-	}
-
 }

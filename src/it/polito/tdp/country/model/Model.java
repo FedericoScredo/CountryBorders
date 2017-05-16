@@ -73,7 +73,7 @@ public class Model {
 		Graphs.addAllVertices(graph, dao.listCountry(countryIdMap)) ;
 	
 		// crea gli archi del grafo -- versione 3
-		for(CountryPair cp : dao.listCoppieCountryAdiacenti()) {
+		for(CountryPair cp : dao.listCoppieCountryAdiacenti(countryIdMap)) {
 			graph.addEdge(cp.getC1(), cp.getC2()) ;
 		}
 	}

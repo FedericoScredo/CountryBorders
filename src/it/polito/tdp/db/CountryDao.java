@@ -107,7 +107,7 @@ public class CountryDao {
 		}
 	}
 
-	public List<CountryPair> listCoppieCountryAdiacenti() {
+	public List<CountryPair> listCoppieCountryAdiacenti(CountryIdMap countryIdMap) {
 		final String sql = "SELECT c1.CCode as CCode1, c1.StateAbb as StateAbb1, c1.StateNme as StateNme1, " +
 				"c2.CCode as CCode2, c2.StateAbb as StateAbb2, c2.StateNme as StateNme2 " +
 				"FROM contiguity, country c1, country c2 " +
@@ -124,9 +124,19 @@ public class CountryDao {
 			List<CountryPair> list = new ArrayList<>() ;
 			
 			while(res.next()) {
-				list.add(new CountryPair(
-						new Country(res.getInt("CCode1"), res.getString("StateAbb1"), res.getString("StateNme1")),
-						new Country(res.getInt("CCode2"), res.getString("StateAbb2"), res.getString("StateNme2")))) ;
+				Country c1 = countryIdMap.get(res.getInt("CCode1")) ;
+				if(c1==null) {
+					c1 = new Country(res.getInt("CCode1"), res.getString("StateAbb1"), res.getString("StateNme1")) ;
+					c1 = countryIdMap.put(c1);
+				}
+				
+				Country c2 = countryIdMap.get(res.getInt("CCode2")) ;
+				if(c2==null) {
+					c2 = new Country(res.getInt("CCode2"), res.getString("StateAbb2"), res.getString("StateNme2")) ;
+					c2 = countryIdMap.put(c1);
+				}
+
+				list.add(new CountryPair(c1, c2)) ;
 			}
 			
 			res.close();
